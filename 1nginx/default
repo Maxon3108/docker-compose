@@ -1,0 +1,30 @@
+resolver 127.0.0.11 ipv6=off;
+
+server {
+      listen       80;
+      server_name  mysite.ru www.mysite.ru;
+      set $python python;
+      set $apache apache;
+      location / {
+          root /var/www/html;
+          index  index.html index.htm;
+       }
+
+      location =/cat {
+          root /var/www/html/cat;
+	  index  index.html index.htm;
+       }
+
+      location ~* \.(doc|docx|xls|xlsx)$ {
+	  proxy_pass http://$python/index.html;
+      }
+
+      location ~ \.php$ {
+	  proxy_pass http://$apache/index.php;
+      }
+      location ~* \.(jpg|jpeg|png|gif) {
+          root /var/www/html/images;
+      }
+     }
+
+
