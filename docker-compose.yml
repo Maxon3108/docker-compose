@@ -1,0 +1,36 @@
+
+version: '3.4'
+#networks:
+services:
+   apache:
+      image: maxon3108/apache:v4
+      container_name: apache
+#      networks:
+#         - nginx_network
+      expose:
+         - "80"
+      restart: always 
+   python:
+      image: maxon3108/pythonsimhttpser:v5
+      container_name: python
+ #     networks:
+ #        - nginx_network
+      expose:
+         - "80"
+      restart: always
+   nginx:
+      image: maxon3108/nginx:my12
+      container_name: nginx
+      ports:
+         - 8090:80
+#      networks:
+#         - nginx_network
+      links:
+         - apache
+         - python
+      restart: always
+#      depends_on:
+#         - apache
+#networks:
+#  nginx_network:
+#     driver: bridge
